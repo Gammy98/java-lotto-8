@@ -60,7 +60,15 @@ public class ValidatorTest {
     void validateWinningNumbersOutOfRange(){
         assertThatThrownBy(()-> Validator.validateWinningNumbers("1,2,34,66,6,7"))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("[ERROR] 당첨번호는 1부터 45사이의 숫자여야 합니다.");
+                .hasMessageContaining("[ERROR] 당첨번호는 1부터 45사이의 숫자여야 한다.");
+    }
+
+    @DisplayName("당첨 번호에 숫자가 아닌 값이 있으면 예외발생")
+    @Test
+    void validateWinningNumbersIsNotNumber(){
+        assertThatThrownBy(()->Validator.validateWinningNumbers("1,2,4,5,a,b"))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("[ERROR] 당첨 번호는 숫자여야 한다.");
     }
 
 
