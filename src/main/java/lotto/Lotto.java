@@ -28,4 +28,10 @@ public class Lotto {
             }
         }
     }
+
+    public List<Integer> getSortedNumbers(){
+        return numbers.stream()
+                .sorted()
+                .toList();
+    }
 }
