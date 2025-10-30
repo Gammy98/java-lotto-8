@@ -37,5 +37,9 @@ public class Validator {
         }
     }
 
+    public static void validateWinningNumbers(String input){
+        //TODO : 테스트후 개발
+    }
+
 
 }
