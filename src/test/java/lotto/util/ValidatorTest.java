@@ -3,10 +3,14 @@ package lotto.util;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class ValidatorTest {
+
+    private final List<Integer> winningNumbers = List.of(1,2,3,4,5,6);
 
     @DisplayName("올바른 구입 금액일 경우 예외발생하지 않는다")
     @Test
@@ -37,6 +41,13 @@ public class ValidatorTest {
         assertThatThrownBy(() -> Validator.validatePurchaseMoney("1500"))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("[ERROR] 구입 금액은 1000원 단위여야 한다.");
+    }
+
+    @DisplayName("올바른 당첨 번호는 예외가 발생하지 않는다")
+    @Test
+    void validateWinningNumberSuccess(){
+        assertThatCode(()-> Validator.validateWinningNumbers("1,2,3,4,5,6"))
+                .doesNotThrowAnyException();
     }
 
     @DisplayName("당첨 번호의 개수가 6개가 아니면 예외발생")
@@ -79,7 +90,7 @@ public class ValidatorTest {
                 .hasMessageContaining("[ERROR] 당첨 번호는 쉼표로 구분해야 한다.");
     }
 
-    @DisplayName("당첨 번호가 쉼표로 시작하면 예외가 발생한다.")
+    @DisplayName("당첨 번호가 쉼표로 시작하면 예외발생.")
     @Test
     void validateWinningNumbersStartsWithComma() {
         assertThatThrownBy(() -> Validator.validateWinningNumbers(",1,2,3,4,5"))
@@ -87,12 +98,44 @@ public class ValidatorTest {
                 .hasMessageContaining("[ERROR] 당첨 번호는 쉼표로 시작하거나 끝날 수 없다."); // (오타 수정 반영)
     }
 
-    @DisplayName("당첨 번호가 쉼표로 끝나면 예외가 발생한다.")
+    @DisplayName("당첨 번호가 쉼표로 끝나면 예외발생.")
     @Test
     void validateWinningNumbersEndsWithComma() {
         assertThatThrownBy(() -> Validator.validateWinningNumbers("1,2,3,4,5,"))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("[ERROR] 당첨 번호는 쉼표로 시작하거나 끝날 수 없다."); // (오타 수정 반영)
+    }
+
+    @DisplayName("보너스 번호가 숫자가 아니면 예외발생")
+    @Test
+    void validateBonusNumberIsNotNumber(){
+        assertThatThrownBy(()-> Validator.validateBonusNumber("a", winningNumbers))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("[ERROR] 보너스 번호는 숫자여야 한다.");
+    }
+
+    @DisplayName("보너스 번호가 1~45 사이의 숫자가 아니면 예외발생")
+    @Test
+    void validateBonusNumberOutOfRange(){
+        assertThatThrownBy(()-> Validator.validateBonusNumber("66", winningNumbers))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("[ERROR] 보너스 번호는 1부터 45 사이의 숫자여야 한다.");
+
+    }
+
+    @DisplayName("보너스 번호가 당첨번호와 중복되면 예외발생")
+    @Test
+    void validateBonusNumberDuplication(){
+        assertThatThrownBy(()->Validator.validateBonusNumber("6",winningNumbers))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("[ERROR] 보너스 번호는 당첨 번호와 중복될 수 없다.");
+    }
+
+    @DisplayName("올바른 보너스 번호인 경우 예외가 발생하지 않는다")
+    @Test
+    void validateBonusNumberSuccess(){
+        assertThatCode(()->Validator.validateBonusNumber("7",winningNumbers))
+                .doesNotThrowAnyException();;
     }
 
 }

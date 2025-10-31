@@ -107,6 +107,10 @@ public class Validator {
         }
     }
 
+    public static void validateBonusNumber(String input, List<Integer> winningNumbers){
+        //
+    }
+
 
 
 }
