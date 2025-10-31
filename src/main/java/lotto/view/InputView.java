@@ -3,6 +3,8 @@ package lotto.view;
 import camp.nextstep.edu.missionutils.Console;
 import lotto.util.Validator;
 
+import java.util.List;
+
 public class InputView {
 
     public int readPurchaseMoney() {
@@ -33,6 +35,21 @@ public class InputView {
             }
     }
 
+    public int readBonusNumber(List<Integer> winningNumbers){
+        System.out.println();
+        System.out.println("보너스 번호를 입력해 주세요.");
+
+        while (true) {
+            try {
+                String input = Console.readLine();
+                Validator.validateBonusNumber(input, winningNumbers);
+                return Integer.parseInt(input.trim());
+            } catch (IllegalArgumentException e) {
+                System.out.println(e.getMessage());
+            }
+
+        }
+    }
 
     // TODO : 보너스 번호 입력
 }

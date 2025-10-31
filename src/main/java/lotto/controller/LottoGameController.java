@@ -5,7 +5,9 @@ import lotto.service.LottoService;
 import lotto.view.InputView;
 import lotto.view.OutputView;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class LottoGameController {
 
@@ -19,17 +21,26 @@ public class LottoGameController {
         this.lottoService = new LottoService();
     }
 
-    public void run(){
+    public void run() {
         int purchaseMoney = inputView.readPurchaseMoney();
-
         List<Lotto> lottos = lottoService.makeLottos(purchaseMoney);
-        int lottoCount = lottos.size();
-
-        outputView.printPurchaseCount(lottoCount);
+        outputView.printPurchaseCount(lottos.size());
         outputView.printLottos(lottos);
 
-        String winningNumbers = inputView.readWinningNumbers();
+        String winningNumbersInput = inputView.readWinningNumbers();
 
-        //TODO: 보너스번호 입력
+        List<Integer> winningNumbers = WinningNumbersToList(winningNumbersInput);
+        int bonusNumber = inputView.readBonusNumber(winningNumbers);
+
+
+        //TODO: 통계계산
+
+    }
+
+    private List<Integer> WinningNumbersToList(String input) {
+        return Arrays.stream(input.split(","))
+                .map(String::trim)
+                .map(Integer::parseInt)
+                .collect(Collectors.toList());
     }
 }

@@ -108,7 +108,30 @@ public class Validator {
     }
 
     public static void validateBonusNumber(String input, List<Integer> winningNumbers){
-        //
+        int bonusNumber = validateBonusIsNumber(input);
+        validateBonusOutOfRange(bonusNumber);
+        validateBonusDuplication(bonusNumber,winningNumbers
+        );
+    }
+
+    private static int validateBonusIsNumber(String input) {
+        try {
+            return Integer.parseInt(input.trim());
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("[ERROR] 보너스 번호는 숫자여야 한다.");
+        }
+    }
+
+    private static void validateBonusOutOfRange(int number){
+        if (number < 1 || number > 45) {
+            throw new IllegalArgumentException("[ERROR] 보너스 번호는 1부터 45 사이의 숫자여야 한다.");
+        }
+    }
+
+    private static void validateBonusDuplication(int bonusNumber, List<Integer> winningNumbers){
+        if (winningNumbers.contains(bonusNumber)) {
+            throw new IllegalArgumentException("[ERROR] 보너스 번호는 당첨 번호와 중복될 수 없다.");
+        }
     }
 
 
