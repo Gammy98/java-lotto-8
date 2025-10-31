@@ -71,5 +71,28 @@ public class ValidatorTest {
                 .hasMessageContaining("[ERROR] 당첨 번호는 숫자여야 한다.");
     }
 
+    @DisplayName("당첨 번호가 쉼표로 구분되지 않으면 예외발생")
+    @Test
+    void validateWinningNumbersSeparator(){
+        assertThatThrownBy(() -> Validator.validateWinningNumbers("1,2,3 4,5,22"))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("[ERROR] 당첨 번호는 쉼표로 구분해야 한다.");
+    }
+
+    @DisplayName("당첨 번호가 쉼표로 시작하면 예외가 발생한다.")
+    @Test
+    void validateWinningNumbersStartsWithComma() {
+        assertThatThrownBy(() -> Validator.validateWinningNumbers(",1,2,3,4,5"))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("[ERROR] 당첨 번호는 쉼표로 시작하거나 끝날 수 없다."); // (오타 수정 반영)
+    }
+
+    @DisplayName("당첨 번호가 쉼표로 끝나면 예외가 발생한다.")
+    @Test
+    void validateWinningNumbersEndsWithComma() {
+        assertThatThrownBy(() -> Validator.validateWinningNumbers("1,2,3,4,5,"))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("[ERROR] 당첨 번호는 쉼표로 시작하거나 끝날 수 없다."); // (오타 수정 반영)
+    }
 
 }

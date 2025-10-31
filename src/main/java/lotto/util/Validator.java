@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Validator {
 
@@ -44,6 +46,8 @@ public class Validator {
 
     //당첨번호 검증 메서드
     public static void validateWinningNumbers(String input){
+
+        validateInput(input);
         String[] lottoNumber = input.split(",");
         validateWinningNumberIsSix(lottoNumber);
         List<Integer> numbers = convertValidateNumbers(lottoNumber);
@@ -88,6 +92,20 @@ public class Validator {
         }
     }
 
+    private static void validateInput(String input) {
+
+        if (input.contains(" ")){
+            throw new IllegalArgumentException("[ERROR] 당첨 번호는 쉼표로 구분해야 한다.");
+        }
+
+        if(!input.contains(",")){
+            throw new IllegalArgumentException("[ERROR] 당첨 번호는 쉽표로 구분해야 한다.");
+        }
+
+        if (input.startsWith(",") || input.endsWith(",")){
+            throw new IllegalArgumentException("[ERROR] 당첨 번호는 쉼표로 시작하거나 끝날 수 없다.");
+        }
+    }
 
 
 
