@@ -28,5 +28,8 @@ public class LottoGameController {
         outputView.printPurchaseCount(lottoCount);
         outputView.printLottos(lottos);
 
+        String winningNumbers = inputView.readWinningNumbers();
+
+        //TODO: 보너스번호 입력
     }
 }
