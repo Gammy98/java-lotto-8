@@ -20,7 +20,7 @@ public class RankingLottoTest {
     void createRankingLottoIsNotSix(){
         assertThatThrownBy(() -> new RankingLotto(List.of(1, 2, 3, 4, 5), 6))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("[ERROR] 당첨번호는의 개수는 총 6개여야 한다.");
+                .hasMessageContaining("[ERROR] 로또 번호는 6개여야 한다.");
     }
 
     @DisplayName("생성 시 보너스 번호가 1~45범위를 벗어나면 예외발생")
@@ -38,7 +38,7 @@ public class RankingLottoTest {
         List<Integer> numbers = List.of(1,2,3,4,5,6);
         assertThatThrownBy(()->new RankingLotto(numbers,6))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("[ERROR] 보너스 번호는 당첨 번호와 중복 될 수 없다.");
+                .hasMessageContaining("[ERROR] 보너스 번호는 당첨 번호와 중복될 수 없다.");
     }
 
     @DisplayName("구매한 로또와 비교하여 등수 반환")

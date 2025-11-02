@@ -29,7 +29,8 @@ public enum Rank {
         return prizeMoney;
     }
 
-    public static Rank CheckingRank(int matchCount, boolean matchBonus) {
+
+    public static Rank checkingRank(int matchCount, boolean matchBonus) {
         if (matchCount == THIRD.matchCount) {
             return matchBonus ? SECOND: THIRD;
         }
