@@ -53,7 +53,7 @@ public class RankingLottoTest {
         assertThat(result).isEqualTo(expectedRank);
     }
 
-    private static Stream<Arguments> provideLottoAndExpectedRank(){
+    private static Stream<Arguments> provideLottoAndExpectRank(){
         return Stream.of(
                 Arguments.of(new Lotto(List.of(1,2,3,4,5,6)), Rank.FIRST),
                 Arguments.of(new Lotto(List.of(1,2,3,4,5,7)), Rank.SECOND),
