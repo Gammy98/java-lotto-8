@@ -49,8 +49,8 @@ public class Validator {
 
         validateInput(input);
         String[] lottoNumber = input.split(",");
-        validateWinningNumberIsSix(lottoNumber);
         List<Integer> numbers = convertValidateNumbers(lottoNumber);
+        validateWinningNumberIsSix(lottoNumber);
         validateNoDuplicate(numbers);
 
     }
